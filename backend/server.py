@@ -83,13 +83,13 @@ async def create_narration(request: NarrationRequest):
     text = (request.text or "").strip()[:4000]
     if not text:
         raise HTTPException(status_code=400, detail="text is required")
-    key = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    key = hashlib.sha256(("tts-1-hd:" + text).encode("utf-8")).hexdigest()
     audio = narration_cache.get(key)
     if audio is None:
         try:
             audio = await tts_client.generate_speech(
                 text=text,
-                model="tts-1",
+                model="tts-1-hd",
                 voice="echo",
                 speed=0.95,
             )

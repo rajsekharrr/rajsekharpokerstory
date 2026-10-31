@@ -64,7 +64,7 @@ export default function StoryOverlay({ player, onClose, onRead }) {
     }
     setNarration("loading");
     try {
-      let url = audioCache.get(player.id);
+      let url = audioCache.get(`hd:${player.id}`);
       if (!url) {
         const titlePart = /[.?!…]$/.test(player.chapterTitle)
           ? player.chapterTitle
@@ -81,7 +81,7 @@ export default function StoryOverlay({ player, onClose, onRead }) {
         );
         if (!res.ok) throw new Error("narration failed");
         url = URL.createObjectURL(await res.blob());
-        audioCache.set(player.id, url);
+        audioCache.set(`hd:${player.id}`, url);
       }
       const audio = new Audio(url);
       audioRef.current = audio;
