@@ -1,4 +1,6 @@
-export default function PokerTable({ players, selectedId, onSelectSeat }) {
+import { Check } from "lucide-react";
+
+export default function PokerTable({ players, selectedId, readIds, onSelectSeat }) {
   return (
     <section className="table-zone" aria-label="Poker table">
       <div className="table-assembly">
@@ -28,6 +30,16 @@ export default function PokerTable({ players, selectedId, onSelectSeat }) {
           >
             <span className="seat-avatar">
               <span className="seat-initials">{player.initials}</span>
+              {readIds.has(player.id) && (
+                <span
+                  className="seat-read-badge"
+                  data-testid={`read-badge-${player.id}`}
+                  role="status"
+                  aria-label="Chapter read"
+                >
+                  <Check size={10} strokeWidth={3} />
+                </span>
+              )}
             </span>
             <span className="seat-name">{player.name}</span>
             <span className="seat-chips" aria-hidden="true">

@@ -31,7 +31,14 @@ Build a single-page interactive web app that looks and feels like a real online 
 - All of the above, verified: desktop 1440×900 and mobile 390×844 screenshots (table, selected-seat glow, overlay mid-typewriter, fold toast, back-to-table round trip), zero horizontal overflow, correct page title served.
 
 ## Backlog / Next
-- P0: Replace placeholder stories + fold messages in players.js when user sends real content.
+- P0: Replace placeholder stories + fold messages in players.js when user sends real content (narration, badges and toasts follow automatically).
 - P1: Ambient sound design (chip clink on Bet/Fold, soft shuffle on overlay open).
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
-- P2: Voice narration of chapters; share-a-chapter card.
+- P2: Share-a-chapter card.
+
+## Implemented (2026-01, build 2)
+- Build 1: table, seats, glow selection, Bet/Fold, overlay with typewriter + card-deal animation, fold toast, responsive layouts.
+- Ambient Sound: Web Audio API–synthesized chip clinks on Bet/Fold and a gentle card shuffle as the chapter opens (no audio files, no dependencies; `src/utils/sounds.js`).
+- Chapter Tracker: seats show a small gold chip-with-check badge once their chapter is fully revealed; persisted in localStorage (`rajsekhar-read`).
+- Voice Narration: "Listen to this chapter" / Pause / Resume + replay button in the chapter overlay; FastAPI endpoint POST /api/narration synthesizes audio via emergentintegrations OpenAITextToSpeech (model tts-1, voice echo, speed 0.95) using EMERGENT_LLM_KEY from backend/.env, sha256-keyed in-memory cache; audio starts with story fully revealed for read-along.
+

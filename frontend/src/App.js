@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { Spade, X } from "lucide-react";
+import { playCardShuffle, playChipClinks, playFoldClink } from "@/utils/sounds";
 import PokerTable from "@/components/PokerTable";
 import StoryOverlay from "@/components/StoryOverlay";
 import FoldToast from "@/components/FoldToast";
@@ -10,6 +11,15 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [chapterOpen, setChapterOpen] = useState(false);
   const [toast, setToast] = useState(null);
+  const [readIds, setReadIds] = useState(() => {
+    try {
+      return new Set(
+        JSON.parse(window.localStorage.getItem("rajsekhar-read") ?? "[]"),
+      );
+    } catch {
+      return new Set();
+    }
+  });
 
   const clearToast = useCallback(() => setToast(null), []);
 
@@ -17,12 +27,29 @@ export default function App() {
 
   const toggleSeat = (id) => setSelectedId((cur) => (cur === id ? null : id));
 
+  const markRead = useCallback((id) => {
+    setReadIds((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev).add(id);
+      try {
+        window.localStorage.setItem("rajsekhar-read", JSON.stringify([...next]));
+      } catch {
+        /* storage unavailable — badge just won't persist */
+      }
+      return next;
+    });
+  }, []);
+
   const handleBet = () => {
-    if (selected) setChapterOpen(true);
+    if (!selected) return;
+    playChipClinks();
+    setChapterOpen(true);
+    window.setTimeout(playCardShuffle, 260);
   };
 
   const handleFold = () => {
     if (!selected) return;
+    playFoldClink();
     setToast({ id: Date.now(), player: selected });
   };
 
@@ -46,6 +73,7 @@ export default function App() {
         <PokerTable
           players={PLAYERS}
           selectedId={selectedId}
+          readIds={readIds}
           onSelectSeat={toggleSeat}
         />
 
@@ -82,7 +110,11 @@ export default function App() {
       </main>
 
       {chapterOpen && selected && (
-        <StoryOverlay player={selected} onClose={() => setChapterOpen(false)} />
+        <StoryOverlay
+          player={selected}
+          onRead={markRead}
+          onClose={() => setChapterOpen(false)}
+        />
       )}
       {toast && (
         <FoldToast key={toast.id} player={toast.player} onDone={clearToast} />

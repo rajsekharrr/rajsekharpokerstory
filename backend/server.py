@@ -66,6 +66,40 @@ async def get_status_checks():
     
     return status_checks
 
+class NarrationRequest(BaseModel):
+    text: str
+
+
+from emergentintegrations.llm.openai import OpenAITextToSpeech
+import hashlib
+from fastapi import Response, HTTPException
+
+tts_client = OpenAITextToSpeech(api_key=os.environ.get("EMERGENT_LLM_KEY"))
+narration_cache = {}
+
+
+@api_router.post("/narration")
+async def create_narration(request: NarrationRequest):
+    text = (request.text or "").strip()[:4000]
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+    key = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    audio = narration_cache.get(key)
+    if audio is None:
+        try:
+            audio = await tts_client.generate_speech(
+                text=text,
+                model="tts-1",
+                voice="echo",
+                speed=0.95,
+            )
+        except Exception as e:
+            logger.error(f"TTS generation failed: {e}")
+            raise HTTPException(status_code=502, detail="narration generation failed")
+        narration_cache[key] = audio
+    return Response(content=audio, media_type="audio/mpeg")
+
+
 # Include the router in the main app
 app.include_router(api_router)
 

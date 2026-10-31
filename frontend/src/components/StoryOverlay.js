@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2, Pause, Play, RotateCcw } from "lucide-react";
 
 const ROMAN = ["I", "II", "III", "IV", "V", "VI"];
 
-export default function StoryOverlay({ player, onClose }) {
+const audioCache = new Map();
+
+export default function StoryOverlay({ player, onClose, onRead }) {
   const [typed, setTyped] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const [closing, setClosing] = useState(false);
+  const [narration, setNarration] = useState("idle");
   const timerRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const text = player.story;
@@ -33,6 +37,66 @@ export default function StoryOverlay({ player, onClose }) {
       document.body.style.overflow = "";
     };
   }, []);
+
+  useEffect(() => {
+    if (!isTyping) onRead(player.id);
+  }, [isTyping, onRead, player.id]);
+
+  useEffect(
+    () => () => {
+      if (audioRef.current) audioRef.current.pause();
+    },
+    [],
+  );
+
+  const toggleNarration = async () => {
+    if (narration === "loading") return;
+    const el = audioRef.current;
+    if (el && (narration === "playing" || narration === "paused")) {
+      if (narration === "playing") {
+        el.pause();
+        setNarration("paused");
+      } else {
+        el.play();
+        setNarration("playing");
+      }
+      return;
+    }
+    setNarration("loading");
+    try {
+      let url = audioCache.get(player.id);
+      if (!url) {
+        const text = `Chapter ${ROMAN[player.id - 1]}. ${player.chapterTitle}. ${player.story}`;
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/api/narration`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          },
+        );
+        if (!res.ok) throw new Error("narration failed");
+        url = URL.createObjectURL(await res.blob());
+        audioCache.set(player.id, url);
+      }
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => setNarration("idle");
+      revealAll();
+      await audio.play();
+      setNarration("playing");
+    } catch (e) {
+      setNarration("error");
+    }
+  };
+
+  const replayNarration = () => {
+    const el = audioRef.current;
+    if (!el) return;
+    el.currentTime = 0;
+    el.play();
+    setNarration("playing");
+  };
 
   const requestClose = () => {
     if (closing) return;
@@ -100,6 +164,40 @@ export default function StoryOverlay({ player, onClose }) {
           {typed}
           {isTyping && <span className="type-cursor" aria-hidden="true" />}
         </p>
+        <div className="narration-row">
+          <button
+            type="button"
+            className={`narration-btn${narration === "playing" ? " is-playing" : ""}`}
+            data-testid="narration-play-button"
+            onClick={toggleNarration}
+          >
+            {narration === "loading" ? (
+              <Loader2 size={15} className="animate-spin" />
+            ) : narration === "playing" ? (
+              <Pause size={15} />
+            ) : (
+              <Play size={15} />
+            )}
+            <span>
+              {narration === "loading"
+                ? "Waking the narrator"
+                : narration === "playing"
+                  ? "Pause"
+                  : narration === "paused"
+                    ? "Resume"
+                    : "Listen to this chapter"}
+            </span>
+          </button>
+          <button
+            type="button"
+            className="narration-btn narration-replay"
+            data-testid="narration-replay-button"
+            aria-label="Replay narration"
+            onClick={replayNarration}
+          >
+            <RotateCcw size={15} />
+          </button>
+        </div>
         <p className="chapter-hint">
           {isTyping ? "Tap the story to reveal it all" : "End of chapter"}
         </p>

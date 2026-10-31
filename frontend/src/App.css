@@ -829,6 +829,88 @@
   }
 }
 
+/* ————— narration controls ————— */
+
+.narration-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 36px;
+  animation: fadeUp 0.5s ease 0.6s both;
+}
+
+.narration-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(20, 16, 8, 0.55);
+  color: #e9cf8a;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.narration-btn:hover {
+  background: rgba(212, 175, 55, 0.14);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.22);
+  transform: translateY(-2px);
+}
+
+.narration-btn.is-playing {
+  background: rgba(212, 175, 55, 0.18);
+  color: #f6e27a;
+}
+
+.narration-replay {
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+}
+
+.narration-error {
+  margin: 30px 0 0;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: rgba(255, 150, 140, 0.85);
+}
+
+/* ————— read badge (gold chip) ————— */
+
+.seat-avatar {
+  position: relative;
+}
+
+.seat-read-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #231a06;
+  background: radial-gradient(circle at 35% 30%, #f0d68a, #b08a2e);
+  border: 2px dashed rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.65), 0 2px 6px rgba(0, 0, 0, 0.6);
+  animation: badgePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes badgePop {
+  from { opacity: 0; transform: scale(0) rotate(-30deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
