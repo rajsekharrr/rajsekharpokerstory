@@ -120,3 +120,99 @@ export const playLoadShuffle = async () => {
   shuffle(0.05);
   return true;
 };
+
+let ambienceNodes = null;
+
+export const startAmbience = () => {
+  if (!soundEnabled() || ambienceNodes) return;
+  const ctx = getCtx();
+
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(0.0001, ctx.currentTime);
+  master.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 2.5);
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = 700;
+  filter.Q.value = 0.4;
+  filter.connect(master).connect(ctx.destination);
+
+  const drift = ctx.createOscillator();
+  const driftGain = ctx.createGain();
+  drift.type = "sine";
+  drift.frequency.value = 0.03;
+  driftGain.gain.value = 240;
+  drift.connect(driftGain).connect(filter.frequency);
+  drift.start();
+
+  const breathe = ctx.createOscillator();
+  const breatheGain = ctx.createGain();
+  breathe.type = "sine";
+  breathe.frequency.value = 0.05;
+  breatheGain.gain.value = 0.014;
+  breathe.connect(breatheGain).connect(master.gain);
+  breathe.start();
+
+  const voices = [
+    [110.0, "triangle"],
+    [164.81, "triangle"],
+    [246.94, "sine"],
+    [261.63, "sine"],
+  ].map(([freq, type], idx) => {
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.detune.value = idx % 2 === 0 ? 3 : -3;
+    g.gain.value = 0.25;
+    osc.connect(g).connect(filter);
+    osc.start();
+    return osc;
+  });
+
+  const room = ctx.createBufferSource();
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < data.length; i++) {
+    last = (last + (Math.random() * 2 - 1) * 0.02) * 0.995;
+    data[i] = last * 3;
+  }
+  room.buffer = buf;
+  room.loop = true;
+  const roomFilter = ctx.createBiquadFilter();
+  roomFilter.type = "lowpass";
+  roomFilter.frequency.value = 320;
+  const roomGain = ctx.createGain();
+  roomGain.gain.value = 0.35;
+  room.connect(roomFilter).connect(roomGain).connect(master);
+  room.start();
+
+  ambienceNodes = { master, drift, breathe, voices, room };
+};
+
+export const stopAmbience = () => {
+  if (!ambienceNodes) return;
+  const ctx = getCtx();
+  const { master, drift, breathe, voices, room } = ambienceNodes;
+  ambienceNodes = null;
+  master.gain.cancelScheduledValues(ctx.currentTime);
+  master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), ctx.currentTime);
+  master.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+  setTimeout(() => {
+    voices.forEach((o) => o.stop());
+    drift.stop();
+    breathe.stop();
+    try {
+      room.stop();
+    } catch {
+      /* already stopped */
+    }
+  }, 1400);
+};
+
+export const isAmbienceRunning = () => ambienceNodes !== null;
+
+if (typeof window !== "undefined") {
+  window.__appAmbience = isAmbienceRunning;
+}

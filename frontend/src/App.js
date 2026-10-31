@@ -36,6 +36,7 @@ export default function App() {
       const next = !on;
       soundOnRef.current = next;
       setSoundEnabled(next);
+      window.dispatchEvent(new CustomEvent("soundchange", { detail: next }));
       return next;
     });
   };

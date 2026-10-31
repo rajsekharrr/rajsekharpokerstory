@@ -36,7 +36,10 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 3 — polish pass)
+## Implemented (2026-01, build 4 — reader's music)
+- Ambient casino loop: synthesized "casino at night" pad (detuned triangle/sine chord A2–E3–B3–C4 through a slowly drifting lowpass, breathing gain LFO, soft room-air noise layer, peak gain ~0.045) that fades in under narration and fades out on pause/end/close; synthesized in Web Audio, no audio files.
+- Mute toggle now silences everything: stops ambience and mutes narration audio instantly (via a soundchange event), and ambience resumes automatically on unmute while narration is playing. Verified as a full state machine: play → on, mute → off, unmute → on, pause → off, replay → on.
+
 - Load ambience: soft card shuffle attempts on page load (Web Audio; retries on first tap where browsers block autoplay), global sound toggle (top-right, gold, persisted in localStorage `rajsekhar-sound`, guards every effect), Bet/Fold/listen sounds unchanged.
 - Typewriter: length-adaptive speed (14 ms/char for long chapters, 22 ms short) + extra beats after .!? (220 ms) and ,;:— (110 ms) and a settling beat before typing starts; tap-to-reveal now uses clearTimeout.
 - Intro choreography: four hero chips slide onto the table one by one (0.55–1.85 s), tagline fades in, then seats appear one by one (2.1–2.6 s); action hint and footer follow; reduced-motion now also zeroes animation-delay.

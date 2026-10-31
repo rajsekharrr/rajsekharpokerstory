@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Loader2, Pause, Play, RotateCcw } from "lucide-react";
+import { startAmbience, stopAmbience } from "@/utils/sounds";
 
 const ROMAN = ["I", "II", "III", "IV", "V", "VI"];
 
@@ -50,9 +51,21 @@ export default function StoryOverlay({ player, onClose, onRead }) {
   useEffect(
     () => () => {
       if (audioRef.current) audioRef.current.pause();
+      stopAmbience();
     },
     [],
   );
+
+  useEffect(() => {
+    const onSoundChange = (e) => {
+      const on = e.detail;
+      if (audioRef.current) audioRef.current.muted = !on;
+      if (on && narration === "playing") startAmbience();
+      else stopAmbience();
+    };
+    window.addEventListener("soundchange", onSoundChange);
+    return () => window.removeEventListener("soundchange", onSoundChange);
+  }, [narration]);
 
   const toggleNarration = async () => {
     if (narration === "loading") return;
@@ -90,10 +103,20 @@ export default function StoryOverlay({ player, onClose, onRead }) {
       }
       const audio = new Audio(url);
       audioRef.current = audio;
-      audio.onended = () => setNarration("idle");
+      audio.onplay = () => {
+        setNarration("playing");
+        startAmbience();
+      };
+      audio.onpause = () => {
+        setNarration("paused");
+        stopAmbience();
+      };
+      audio.onended = () => {
+        setNarration("idle");
+        stopAmbience();
+      };
       revealAll();
       await audio.play();
-      setNarration("playing");
     } catch (e) {
       setNarration("error");
     }
