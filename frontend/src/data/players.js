@@ -59,10 +59,9 @@ export const PLAYERS = [
     seat: "Seat 6",
     name: "the Hustler",
     initials: "H",
-    chapterTitle: "The Hustler",
+    chapterTitle: "The Hustler — All In.",
     story:
-      "[ PLACEHOLDER ] The Hustler's chapter will appear here exactly like this — typed out letter by letter in the dark overlay, under the gold title. Send the real story and it takes this seat.",
-    foldMessage:
-      "[ Placeholder fold line ] The Hustler's real fold joke will land here the moment you send it.",
+      "Final year. This is now. I've been filming time lapses of myself studying and posting on Twitter. I've cold emailed more founders, CEOs, and marketing leads than I can count. I'm building Freeze Mail — a browser extension that makes cold emailing founders faster, smarter, and more personal. Because I've lived the pain of doing it manually. I play poker now too — but with limits. And for the first time: I'm in profit. I got placed at an MNC. Decent salary. Stable. And I am not taking it. I want to build. I want to work at a startup. I want to be in the room where the decisions are made and the campaigns are written and the growth happens. That's why I built this table. Every hand I've played — good or bad — led here. The chips are on the table. Let's go.",
+    foldMessage: "ERROR 404: Fold not found. Startup mode activated",
   },
 ];
