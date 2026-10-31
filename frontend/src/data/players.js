@@ -26,11 +26,11 @@ export const PLAYERS = [
     seat: "Seat 3",
     name: "the Fat King",
     initials: "F",
-    chapterTitle: "The Fat King",
+    chapterTitle: "The Fat King — 104.5 Kgs of Pure Confidence.",
     story:
-      "[ PLACEHOLDER ] The Fat King's chapter will appear here exactly like this — typed out letter by letter in the dark overlay, under the gold title. Send the real story and it takes this seat.",
+      "I entered VIT Chennai as a 104.5 kg kid who was probably the heaviest person in the hostel. Probably. I'll never confirm this officially. But here's the thing — my confidence was through the roof. Always has been. That carried me. Finding your people in college when you're new is brutal. I struggled for months. But by the end of first semester I had found my group. Then we discovered Stake.com. For the uninitiated — it's a gambling website. We played. I made ₹5,000 profit. In my mind, I was the Wolf of Wall Street. I was the richest man alive. I was calling shots. I was the king. I lost it all within two weeks. Every. Single. Rupee. Lessons were learned. Some of them financial.",
     foldMessage:
-      "[ Placeholder fold line ] The Fat King's real fold joke will land here the moment you send it.",
+      "104.5 kgs of pure confidence. Fold button not available for this player.",
   },
   {
     id: 4,
