@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Spade, X } from "lucide-react";
-import { playCardShuffle, playChipClinks, playFoldClink } from "@/utils/sounds";
+import { Spade, Volume2, VolumeX, X } from "lucide-react";
+import {
+  isSoundEnabled,
+  playCardShuffle,
+  playChipClinks,
+  playFoldClink,
+  playLoadShuffle,
+  setSoundEnabled,
+} from "@/utils/sounds";
 import PokerTable from "@/components/PokerTable";
 import StoryOverlay from "@/components/StoryOverlay";
 import FoldToast from "@/components/FoldToast";
@@ -20,6 +27,32 @@ export default function App() {
       return new Set();
     }
   });
+
+  const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
+  const soundOnRef = useRef(soundOn);
+
+  const toggleSound = () => {
+    setSoundOn((on) => {
+      const next = !on;
+      soundOnRef.current = next;
+      setSoundEnabled(next);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    playLoadShuffle().then((played) => {
+      if (cancelled || played) return;
+      const retry = () => {
+        if (soundOnRef.current) playLoadShuffle();
+      };
+      window.addEventListener("pointerdown", retry, { once: true });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const clearToast = useCallback(() => setToast(null), []);
   const actionBarRef = useRef(null);
@@ -70,6 +103,17 @@ export default function App() {
       <span className="ambient ambient-gold" aria-hidden="true" />
       <span className="page-grain" aria-hidden="true" />
 
+      <button
+        type="button"
+        className={`sound-toggle${soundOn ? "" : " is-off"}`}
+        data-testid="sound-toggle"
+        aria-label={soundOn ? "Mute sounds" : "Unmute sounds"}
+        aria-pressed={soundOn}
+        onClick={toggleSound}
+      >
+        {soundOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
+      </button>
+
       <header className="site-header">
         <h1 className="site-title">All in: the Story of Rajsekhar</h1>
         <div className="title-ornament" aria-hidden="true">
@@ -118,6 +162,10 @@ export default function App() {
             <span>Fold</span>
           </button>
         </div>
+
+        <footer className="site-footer" data-testid="site-footer">
+          Built with voice. Submitted to Wispr Flow × Emergent Hiring Challenge 2026.
+        </footer>
       </main>
 
       {chapterOpen && selected && (

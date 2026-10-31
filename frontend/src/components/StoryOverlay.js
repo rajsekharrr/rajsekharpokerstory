@@ -18,17 +18,22 @@ export default function StoryOverlay({ player, onClose, onRead }) {
     setTyped("");
     setIsTyping(true);
     let i = 0;
-    timerRef.current = setInterval(() => {
+    const base = text.length > 600 ? 14 : 22;
+    const tick = () => {
       i += 1;
+      setTyped(text.slice(0, i));
       if (i >= text.length) {
-        clearInterval(timerRef.current);
-        setTyped(text);
         setIsTyping(false);
-      } else {
-        setTyped(text.slice(0, i));
+        return;
       }
-    }, 26);
-    return () => clearInterval(timerRef.current);
+      const ch = text[i - 1];
+      let delay = base;
+      if (ch === "." || ch === "!" || ch === "?") delay += 220;
+      else if (ch === "," || ch === ";" || ch === ":" || ch === "—") delay += 110;
+      timerRef.current = setTimeout(tick, delay);
+    };
+    timerRef.current = setTimeout(tick, 280);
+    return () => clearTimeout(timerRef.current);
   }, [player]);
 
   useEffect(() => {
@@ -118,7 +123,7 @@ export default function StoryOverlay({ player, onClose, onRead }) {
 
   const revealAll = () => {
     if (!isTyping) return;
-    clearInterval(timerRef.current);
+    clearTimeout(timerRef.current);
     setTyped(player.story);
     setIsTyping(false);
   };
@@ -145,6 +150,10 @@ export default function StoryOverlay({ player, onClose, onRead }) {
           <b className="suit-red">J♦</b>
         </span>
       </div>
+
+      <span className="chapter-chip" data-testid="chapter-chip" aria-hidden="true">
+        {ROMAN[player.id - 1]}
+      </span>
 
       <button
         type="button"

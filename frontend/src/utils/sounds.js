@@ -1,4 +1,27 @@
 let audioCtx = null;
+let enabled = null;
+
+const soundEnabled = () => {
+  if (enabled === null) {
+    try {
+      enabled = window.localStorage.getItem("rajsekhar-sound") !== "off";
+    } catch {
+      enabled = true;
+    }
+  }
+  return enabled;
+};
+
+export const setSoundEnabled = (value) => {
+  enabled = value;
+  try {
+    window.localStorage.setItem("rajsekhar-sound", value ? "on" : "off");
+  } catch {
+    /* storage unavailable — sound preference just won't persist */
+  }
+};
+
+export const isSoundEnabled = () => soundEnabled();
 
 const getCtx = () => {
   if (!audioCtx) {
@@ -38,16 +61,18 @@ const clink = (at, base, gain) => {
 };
 
 export const playChipClinks = (count = 3) => {
+  if (!soundEnabled()) return;
   for (let i = 0; i < count; i++) {
     clink(i * 0.07, 2100 + Math.random() * 500, 0.16);
   }
 };
 
 export const playFoldClink = () => {
+  if (!soundEnabled()) return;
   clink(0, 1500, 0.14);
 };
 
-export const playCardShuffle = () => {
+const shuffle = (gain) => {
   const ctx = getCtx();
   const dur = 0.5;
   const buffer = ctx.createBuffer(
@@ -70,10 +95,28 @@ export const playCardShuffle = () => {
   band.frequency.exponentialRampToValueAtTime(900, t + dur);
   const noiseGain = ctx.createGain();
   noiseGain.gain.setValueAtTime(0.0001, t);
-  noiseGain.gain.exponentialRampToValueAtTime(0.09, t + 0.06);
+  noiseGain.gain.exponentialRampToValueAtTime(gain, t + 0.06);
   noiseGain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   noise.connect(band).connect(noiseGain).connect(ctx.destination);
   noise.start(t);
-  clink(0.02, 2400, 0.05);
-  clink(0.26, 2800, 0.045);
+  clink(0.02, 2400, gain * 0.55);
+  clink(0.26, 2800, gain * 0.5);
+};
+
+export const playCardShuffle = () => {
+  if (!soundEnabled()) return;
+  shuffle(0.09);
+};
+
+export const playLoadShuffle = async () => {
+  if (!soundEnabled()) return false;
+  const ctx = getCtx();
+  try {
+    await ctx.resume();
+  } catch {
+    return false;
+  }
+  if (ctx.state !== "running") return false;
+  shuffle(0.05);
+  return true;
 };

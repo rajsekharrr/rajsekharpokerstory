@@ -36,8 +36,14 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 2)
-- Build 1: table, seats, glow selection, Bet/Fold, overlay with typewriter + card-deal animation, fold toast, responsive layouts.
+## Implemented (2026-01, build 3 — polish pass)
+- Load ambience: soft card shuffle attempts on page load (Web Audio; retries on first tap where browsers block autoplay), global sound toggle (top-right, gold, persisted in localStorage `rajsekhar-sound`, guards every effect), Bet/Fold/listen sounds unchanged.
+- Typewriter: length-adaptive speed (14 ms/char for long chapters, 22 ms short) + extra beats after .!? (220 ms) and ,;:— (110 ms) and a settling beat before typing starts; tap-to-reveal now uses clearTimeout.
+- Intro choreography: four hero chips slide onto the table one by one (0.55–1.85 s), tagline fades in, then seats appear one by one (2.1–2.6 s); action hint and footer follow; reduced-motion now also zeroes animation-delay.
+- Mobile: Bet/Fold pills at 52 px tap height, larger padding, touch-action: manipulation on all buttons; footer wraps cleanly; no horizontal overflow.
+- Footer: "Built with voice. Submitted to Wispr Flow × Emergent Hiring Challenge 2026."
+- BET panels: gold poker-chip corner badge with the chapter numeral (I–VI), top-left on desktop and mobile.
+- Fold audit: all 6 fold messages verified unique and rendering correctly, cycled through every seat in one scripted pass.
 - Bug fix (user report: "clicking player name shows nothing"): seat clicks were an on/off toggle, so a second click silently deselected the seat and hid the Bet/Fold chips. Selection is now sticky (`selectSeat` never toggles off), seat names get gold hover feedback, and the action bar scrolls into view (block: nearest) whenever a seat is selected so the chips can't hide below the fold. Verified by scripted double-clicks on all three filled seats + independent troubleshoot-agent code review.
 - Ambient Sound: Web Audio API–synthesized chip clinks on Bet/Fold and a gentle card shuffle as the chapter opens (no audio files, no dependencies; `src/utils/sounds.js`).
 - Chapter Tracker: seats show a small gold chip-with-check badge once their chapter is fully revealed; persisted in localStorage (`rajsekhar-read`).

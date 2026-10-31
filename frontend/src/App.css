@@ -206,7 +206,7 @@
   position: relative;
   width: clamp(64px, 10vw, 96px);
   aspect-ratio: 1;
-  animation: floaty 5s ease-in-out infinite alternate;
+  animation: floaty 5s ease-in-out 2.2s infinite alternate;
 }
 
 .hero-chip {
@@ -215,26 +215,32 @@
   border-radius: 50%;
   border: 4px dashed rgba(255, 255, 255, 0.85);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  transform: var(--tf);
+  animation: chipIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .chip-teal {
+  --tf: translateY(14%);
   background: radial-gradient(circle at 38% 30%, #2f8660, #164430);
-  transform: translateY(14%);
+  animation-delay: 0.55s;
 }
 
 .chip-red {
+  --tf: translateY(7%);
   background: radial-gradient(circle at 38% 30%, #c05a4e, #6e1f1a);
-  transform: translateY(7%);
+  animation-delay: 0.8s;
 }
 
 .chip-blue {
+  --tf: translateY(0%);
   background: radial-gradient(circle at 38% 30%, #3b6ea8, #17304f);
-  transform: translateY(0%);
+  animation-delay: 1.05s;
 }
 
 .chip-gold {
+  --tf: translateY(-7%);
   background: radial-gradient(circle at 38% 30%, #e7c565, #8a6a1f);
-  transform: translateY(-7%);
+  animation-delay: 1.3s;
 }
 
 .chip-gold::after {
@@ -243,6 +249,11 @@
   inset: 20%;
   border-radius: 50%;
   border: 1.5px dashed rgba(255, 255, 255, 0.65);
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: translateY(-30px) scale(0.55); }
+  to { opacity: 1; transform: var(--tf); }
 }
 
 .tagline {
@@ -254,6 +265,7 @@
   letter-spacing: 0.04em;
   color: #ecd9a0;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+  animation: fadeUp 0.6s ease 1.75s both;
 }
 
 /* ————— seats ————— */
@@ -280,12 +292,12 @@
   transform: translate(-50%, -50%) scale(1.05);
 }
 
-.seat-1 { top: 12%; left: 17%; animation-delay: 0.35s; }
-.seat-2 { top: 12%; left: 83%; animation-delay: 0.43s; }
-.seat-3 { top: 50%; left: 102.5%; animation-delay: 0.51s; }
-.seat-4 { top: 88%; left: 83%; animation-delay: 0.59s; }
-.seat-5 { top: 88%; left: 17%; animation-delay: 0.67s; }
-.seat-6 { top: 50%; left: -2.5%; animation-delay: 0.75s; }
+.seat-1 { top: 12%; left: 17%; animation-delay: 2.1s; }
+.seat-2 { top: 12%; left: 83%; animation-delay: 2.2s; }
+.seat-3 { top: 50%; left: 102.5%; animation-delay: 2.3s; }
+.seat-4 { top: 88%; left: 83%; animation-delay: 2.4s; }
+.seat-5 { top: 88%; left: 17%; animation-delay: 2.5s; }
+.seat-6 { top: 50%; left: -2.5%; animation-delay: 2.6s; }
 
 .seat-avatar {
   width: clamp(48px, 7vw, 76px);
@@ -637,6 +649,74 @@
   animation: fadeUp 0.5s ease 0.2s both;
 }
 
+/* ————— sound toggle, footer, chapter corner chip ————— */
+
+button {
+  touch-action: manipulation;
+}
+
+.sound-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: rgba(20, 16, 8, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #e9cf8a;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.sound-toggle:hover {
+  background: rgba(212, 175, 55, 0.16);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+}
+
+.sound-toggle.is-off {
+  color: rgba(233, 207, 138, 0.45);
+}
+
+.site-footer {
+  margin-top: clamp(26px, 4vh, 44px);
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.66rem;
+  color: rgba(212, 175, 55, 0.45);
+  text-align: center;
+  animation: fadeUp 0.6s ease 3.1s both;
+}
+
+.chapter-chip {
+  position: absolute;
+  top: 26px;
+  left: 28px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: #2c1f05;
+  --tf: translateY(0);
+  background: radial-gradient(circle at 35% 30%, #f0d68a, #b08a2e);
+  border: 3px dashed rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55), 0 0 18px rgba(212, 175, 55, 0.35);
+  animation: chipIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
+}
+
 /* ————— fold toast ————— */
 
 .fold-toast {
@@ -807,8 +887,24 @@
   }
 
   .chip-btn {
-    padding: 12px 26px;
-    font-size: 0.82rem;
+    padding: 14px 30px;
+    min-height: 50px;
+    font-size: 0.85rem;
+  }
+
+  .chapter-chip {
+    top: 18px;
+    left: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .sound-toggle {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
   }
 
   .action-bar {
@@ -921,6 +1017,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
