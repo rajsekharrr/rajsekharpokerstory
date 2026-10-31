@@ -1,0 +1,98 @@
+{
+  "theme": "dark",
+  "typography": {
+    "headings": "Playfair Display, serif",
+    "names_buttons": "Oswald, sans-serif",
+    "body": "Inter, sans-serif",
+    "instructions": "Import 'Playfair Display' and 'Oswald' from Google Fonts in index.css. Use these strictly to create the premium casino storytelling feel."
+  },
+  "colors": {
+    "background": "#090A0F",
+    "ambient_light": "rgba(30, 58, 138, 0.15)",
+    "table_green": "#1A4D2E",
+    "table_rail": "#2A1810",
+    "gold_accent": "#D4AF37",
+    "gold_glow": "rgba(255, 215, 0, 0.7)",
+    "bet_green": "#2E8B57",
+    "fold_red": "#D32F2F"
+  },
+  "layouts": {
+    "main_container": "100vh, w-full, hidden overflow, flex flex-col items-center justify-center relative. Background must be very dark almost black with a subtle, very large radial-gradient in the center for the ambient blue lighting.",
+    "header": "Absolute top-0 left-0 w-full text-center pt-8. The title 'All in: the Story of Rajsekhar' must be large, elegant (Playfair Display), and gold.",
+    "poker_table": "Absolute center of the screen. Shape: an ellipse (w-[90vw] md:w-[70vw] lg:w-[60vw] h-[55vh] md:h-[65vh] rounded-[50%]). Thick dark wood border (border-[12px] md:border-[20px] border-[#2A1810]) for the rail, with inner shadow for depth. Background uses the felt image layered with a dark green tint.",
+    "seats": "Positioned absolutely along the edge of the table using percentages (e.g., top-left, top-right, middle-left, middle-right, bottom-left, bottom-right). Transform: translate(-50%, -50%) for perfect centering on the edge.",
+    "controls": "Absolute bottom-10 left-1/2 -translate-x-1/2 z-40. Flex row, gap-6. Rendered only when a seat is selected.",
+    "overlay": "Fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col p-8 lg:p-24.",
+    "toast": "Fixed top-8 left-1/2 -translate-x-1/2 z-[100]."
+  },
+  "components": {
+    "TableCenter": "Positioned in the absolute center of the table. Contains the decorative chip stack image and the tagline 'Every Chapter Was a Bet.' in the gold Playfair Display font.",
+    "Seat": "A flex column container. Top: Circular avatar (w-14 h-14 md:w-20 md:h-20) with a dark background, gold border, and gold initials. When active, it gets a massive golden box-shadow glow (shadow-[0_0_30px_rgba(255,215,0,0.7)]). Middle: Player name in Oswald font, uppercase. Bottom: A small lucide-react chip icon or coin icon.",
+    "ActionButtons": "Buttons styled like casino chips. Rounded-full, border-2 border-dashed inside, bold uppercase text. Bet button: green background, white text, includes a playing card icon. Fold button: red background, white text.",
+    "StoryOverlay": "Top area contains a subtle 'Back to Table' button. Below, a massive chapter title (gold). Below that, a max-w-3xl container for the story text which reveals via a typewriter effect.",
+    "FoldToast": "A custom red toast notification (bg-red-900 border border-red-500 text-white px-6 py-3 rounded-md shadow-2xl). Stays for exactly 3 seconds. It displays a funny message unique to the player folded against."
+  },
+  "players": [
+    { "id": 1, "name": "the Wanderer", "position": "top-[15%] left-[15%]" },
+    { "id": 2, "name": "the Dreamer", "position": "top-[15%] right-[15%]" },
+    { "id": 3, "name": "the Fat King", "position": "top-[50%] right-[-5%]" },
+    { "id": 4, "name": "the Investor", "position": "bottom-[15%] right-[15%]" },
+    { "id": 5, "name": "the Builder", "position": "bottom-[15%] left-[15%]" },
+    { "id": 6, "name": "the Hustler", "position": "top-[50%] left-[-5%]" }
+  ],
+  "motion": {
+    "seat_selection": "transition-all duration-300 ease-out. Scale up slightly (scale-110) and add the golden glow when active.",
+    "controls_entrance": "Framer motion or CSS animation: slide up from 20px below and fade in.",
+    "overlay_slide": "Framer motion: initial={y: '100%'} animate={y: 0} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}.",
+    "typewriter_text": "Framer motion staggerChildren on characters, or a simple useEffect that reveals a substring character by character over time.",
+    "card_deal_animation": "Absolute positioned card images in the background of the overlay that animate in (rotate and translate) as the overlay opens, simulating cards being dealt on the table.",
+    "toast": "Slide down from -100% to 0, hold for 3s, then slide back up."
+  },
+  "image_urls": {
+    "table_felt": {
+      "url": "https://images.unsplash.com/photo-1756363212483-2a60660fd4c1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxncmVlbiUyMHBva2VyJTIwdGFibGUlMjBmZWx0JTIwdGV4dHVyZXxlbnwwfHx8fDE3OTM0NzEyNTZ8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Solid green textured background for the poker table felt",
+      "category": "background"
+    },
+    "chip_stack": {
+      "url": "https://images.unsplash.com/photo-1542145177-4dc9b8029711?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwzfHxjYXNpbm8lMjBwb2tlciUyMGNoaXBzJTIwc3RhY2t8ZW58MHx8fHwxNzkzNDcxMjU2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Scattered casino chips for the center of the table",
+      "category": "decorative"
+    },
+    "cards": {
+      "url": "https://images.unsplash.com/photo-1623522264952-8dff960ec8f2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxwbGF5aW5nJTIwY2FyZHN8ZW58MHx8fHwxNzkzNDcxMjU2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Playing cards for subtle background animation in the overlay",
+      "category": "decorative"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Build this as a single-page interactive experience in App.js.",
+    "Use standard Tailwind CSS classes. Use the image URLs provided for the table texture and central chip stack.",
+    "Create a 'players' array containing the 6 players and their unique fold messages. Maintain an 'activePlayer' state.",
+    "Clicking a player sets 'activePlayer'. This triggers the golden glow via conditional classes and reveals the Bet/Fold buttons.",
+    "Clicking 'Bet' toggles an 'overlayOpen' state. Use Framer Motion (or standard CSS transitions if you prefer) to slide in the full-screen overlay from the bottom.",
+    "Implement the typewriter effect for the story text in the overlay. Make sure it resets when opening a new chapter.",
+    "Implement the subtle card-dealing animation in the overlay background using Framer Motion.",
+    "Clicking 'Fold' should trigger a custom toast (or use the 'sonner' library if preferred) positioned at the top center. Show the player's unique fold message for exactly 3 seconds.",
+    "Ensure the layout is highly responsive. The elliptical table should adjust width and height to fit mobile viewports while maintaining the overhead view illusion.",
+    "Add 'data-testid' to all interactive elements, e.g., 'data-testid=\"seat-1\"', 'data-testid=\"bet-button\"', 'data-testid=\"fold-button\"', 'data-testid=\"back-to-table\"'."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: `transition: all`. This results in breaking transforms.",
+    "You MUST NOT center align the app container, ie do not add `.App { text-align: center; }` in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Create new components that match the style and conventions of existing components when needed.",
+    "Use `sonner` for toasts."
+  ]
+}
