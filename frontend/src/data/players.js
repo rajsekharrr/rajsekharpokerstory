@@ -37,11 +37,11 @@ export const PLAYERS = [
     seat: "Seat 4",
     name: "the Investor",
     initials: "I",
-    chapterTitle: "The Investor",
+    chapterTitle: "The Investor — This Time I Read the Prospectus.",
     story:
-      "[ PLACEHOLDER ] The Investor's chapter will appear here exactly like this — typed out letter by letter in the dark overlay, under the gold title. Send the real story and it takes this seat.",
+      "Year 2. I still wanted to make money — but smarter. I discovered Tickertape. I would spend hours doing fundamental analysis, reading balance sheets, understanding P/E ratios. For once, I was being patient. It worked. I've been investing in stocks and mutual funds ever since. Also this year: my roommate dragged me to the gym. Best decision of my college life — no contest. I joined clubs, made connections, socialised aggressively, then had to forcefully stop because it was becoming a full-time job. Our 6-bed room was legendary. FIFA on my laptop, Teen Patti on one side, Valorant on the other. The warden visited so often he practically had a key. My CGPA dropped from 8.3 to 7.8. No ragrets. Did a full-stack internship at Tribal Wolf — a gen-Z fashion startup incubated in our college. Then an AI internship at Velocis Systems in Summer 2025. The portfolio was building.",
     foldMessage:
-      "[ Placeholder fold line ] The Investor's real fold joke will land here the moment you send it.",
+      "He put his money in Tickertape instead. Still holding. Up 23%",
   },
   {
     id: 5,

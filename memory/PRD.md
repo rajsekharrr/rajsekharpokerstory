@@ -31,7 +31,7 @@ Build a single-page interactive web app that looks and feels like a real online 
 - All of the above, verified: desktop 1440×900 and mobile 390×844 screenshots (table, selected-seat glow, overlay mid-typewriter, fold toast, back-to-table round trip), zero horizontal overflow, correct page title served.
 
 ## Backlog / Next
-- P0: Replace remaining placeholder stories + fold messages (seats 4–6) when user sends real content. Seats 1 (the Wanderer), 2 (the Dreamer) and 3 (the Fat King) now carry real content with custom chapter titles.
+- P0: Replace remaining placeholder stories + fold messages (seats 5–6) when user sends real content. Seats 1–4 (the Wanderer, the Dreamer, the Fat King, the Investor) now carry real content with custom chapter titles.
 - P1: Ambient sound design (chip clink on Bet/Fold, soft shuffle on overlay open).
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
