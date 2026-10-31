@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Spade, X } from "lucide-react";
 import { playCardShuffle, playChipClinks, playFoldClink } from "@/utils/sounds";
 import PokerTable from "@/components/PokerTable";
@@ -22,10 +22,20 @@ export default function App() {
   });
 
   const clearToast = useCallback(() => setToast(null), []);
+  const actionBarRef = useRef(null);
 
   const selected = PLAYERS.find((p) => p.id === selectedId) ?? null;
 
-  const toggleSeat = (id) => setSelectedId((cur) => (cur === id ? null : id));
+  const selectSeat = (id) => setSelectedId(id);
+
+  useEffect(() => {
+    if (selectedId && actionBarRef.current) {
+      actionBarRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [selectedId]);
 
   const markRead = useCallback((id) => {
     setReadIds((prev) => {
@@ -74,10 +84,11 @@ export default function App() {
           players={PLAYERS}
           selectedId={selectedId}
           readIds={readIds}
-          onSelectSeat={toggleSeat}
+          onSelectSeat={selectSeat}
         />
 
         <div
+          ref={actionBarRef}
           className={`action-bar${selected ? " is-visible" : ""}`}
           data-testid="action-bar"
         >

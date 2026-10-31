@@ -321,6 +321,11 @@
   transition: color 0.35s ease, text-shadow 0.35s ease;
 }
 
+.seat:hover .seat-name {
+  color: #f0d68a;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
 .seat-chips {
   display: flex;
   flex-direction: column;
