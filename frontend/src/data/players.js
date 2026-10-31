@@ -15,11 +15,11 @@ export const PLAYERS = [
     seat: "Seat 2",
     name: "the Dreamer",
     initials: "D",
-    chapterTitle: "The Dreamer",
+    chapterTitle: "The Dreamer — Every Morning I Passed IIT Delhi.",
     story:
-      "[ PLACEHOLDER ] The Dreamer's chapter will appear here exactly like this — typed out letter by letter in the dark overlay, under the gold title. Send the real story and it takes this seat.",
+      "Post-COVID 11th and 12th. Sent to FIITJEE South Delhi, Kalu Sarai. Every morning in the van from my hostel to coaching, we passed IIT Delhi. I would stare at those gates every single day and tell myself — one day. I studied like I have never studied before. I gave up social media, movies, shows, sleep, everything. I was genuinely, deeply all in. Then the burnout hit. Came home. Didn't study well after that. JEE results came — and they were exactly what happens when you give everything and still run out of time. It was the most depressing chapter of my life. But it also showed me I could go all in on something. That matters.",
     foldMessage:
-      "[ Placeholder fold line ] The Dreamer's real fold joke will land here the moment you send it.",
+      "FOLD? He passed IIT Delhi every morning in a van. Fold was never an option. He just ran out of chips — temporarily.",
   },
   {
     id: 3,
