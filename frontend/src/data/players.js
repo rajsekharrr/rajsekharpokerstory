@@ -48,11 +48,11 @@ export const PLAYERS = [
     seat: "Seat 5",
     name: "the Builder",
     initials: "B",
-    chapterTitle: "The Builder",
+    chapterTitle: "The Builder — The Year Things Got Real.",
     story:
-      "[ PLACEHOLDER ] The Builder's chapter will appear here exactly like this — typed out letter by letter in the dark overlay, under the gold title. Send the real story and it takes this seat.",
+      "Year 3. We looked at each other and decided the 6-bed room era was over. Moved to C Block — a proper 4-bed setup. Started LeetCode seriously. Internship hunting. This was also the year we discovered poker — and I was losing, badly, consistently, and somehow still enjoyed it. The year itself was a little boring if I'm honest. Two trips saved it: Kodaikanal and Pondicherry — non-negotiable. The big move: I built Toqsy. An app to help people cold approach others in real life, reduce social anxiety, and just — talk to strangers. Because I had seen too many people at VIT who couldn't. And then: I cold emailed the marketing head of Quadrafort in Noida. He replied. I got the internship. That email changed everything about how I think about reaching out.",
     foldMessage:
-      "[ Placeholder fold line ] The Builder's real fold joke will land here the moment you send it.",
+      "He cold emailed a marketing head and got the internship. He doesn't fold, he raises.",
   },
   {
     id: 6,
