@@ -66,7 +66,11 @@ export default function StoryOverlay({ player, onClose, onRead }) {
     try {
       let url = audioCache.get(player.id);
       if (!url) {
-        const text = `Chapter ${ROMAN[player.id - 1]}. ${player.chapterTitle}. ${player.story}`;
+        const titlePart = /[.?!…]$/.test(player.chapterTitle)
+          ? player.chapterTitle
+          : `${player.chapterTitle}.`;
+        const spoken = ["One", "Two", "Three", "Four", "Five", "Six"][player.id - 1];
+        const text = `Chapter ${spoken}. ${titlePart} ${player.story}`;
         const res = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/api/narration`,
           {

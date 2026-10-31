@@ -4,11 +4,11 @@ export const PLAYERS = [
     seat: "Seat 1",
     name: "the Wanderer",
     initials: "W",
-    chapterTitle: "The Wanderer",
+    chapterTitle: "The Wanderer — How Many Cities Does It Take?",
     story:
-      "[ PLACEHOLDER ] The Wanderer's chapter will play out right here, letter by letter, once you send the real story. The typewriter, the dealt cards and this exact typography are already waiting for your words.",
+      "Born in Guwahati, moved to Bathinda, then shipped off to a boarding school in Alwar — the kind where kids wear different coloured Adidas Superstars on each foot in the same size just because they can. Where G-Shocks were uniforms and kids ate Pringles from the can like it was Kurkure. I was watching all of this — a kid from a regular family, realising for the first time that money is a real, tangible, different-world thing. I lasted one year. But those were genuinely the best days of my school life — something about being thrown into the deep end. Came back home to Bathinda. Then moved to Delhi after covid. The city life was beginning.",
     foldMessage:
-      "[ Placeholder fold line ] The Wanderer's real fold joke will land here the moment you send it.",
+      "FOLD? This guy moved cities 5 times before Class 9. He doesn't fold, he relocates.",
   },
   {
     id: 2,
