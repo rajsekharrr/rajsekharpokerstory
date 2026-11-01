@@ -176,6 +176,7 @@ export default function App() {
       <span className="ambient ambient-blue-bottom" aria-hidden="true" />
       <span className="ambient ambient-gold" aria-hidden="true" />
       <span className="page-grain" aria-hidden="true" />
+      <span className="page-vignette" aria-hidden="true" />
 
       <button
         type="button"

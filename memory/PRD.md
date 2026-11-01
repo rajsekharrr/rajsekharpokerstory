@@ -36,7 +36,13 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 10 — dealer-pointing narrator)
+## Implemented (2026-01, build 11 — final visual polish)
+- Mobile 375px: extra ≤400px breakpoint nudges side seats inward (9.5%/90.5%) and tightens name tracking — zero clipped seats and no horizontal overflow at 375×812, verified by bounding-rect assertions.
+- Casino-lamp vignette: fixed radial gradient (transparent center → rgba(0,0,0,.55) at the edges, biased toward a top-center light source) over the page background, under content.
+- Felt crosshatch: two faint repeating-linear-gradients at ±45° (1px white lines on a 7px pitch, ~3% opacity) layered on the felt above the texture image, below the center content.
+- Progression chip stacks: seat chip counts now graduate 2→3→4→4→5→6 (Wanderer smallest → Hustler tallest); measured heights rise monotonically (8/11/16/16/21/26px desktop).
+- No text, links, animations, or story content touched.
+
 - Dealer bubble now points to the D chip, not the small blind: on first load "Six players. Six chapters. One story. We start from the dealer — the Wanderer wears the D. Click him to begin."; after each chapter it tracks the moved chip ("The deal moves clockwise — the Dreamer wears the D now. Click him for the next chapter."); hover/fold/all-read lines unchanged and still take priority.
 - Confirmed reading order: chapters are read in dealer order (the D chip always marks whose story is next); verified the bubble follows the chip across three positions.
 

@@ -11,6 +11,8 @@ const POSITION_BY_SEAT = {
   6: "ALL IN",
 };
 
+const CHIP_COUNTS = { 1: 2, 2: 3, 3: 4, 4: 4, 5: 5, 6: 6 };
+
 const COMMUNITY_FACES = [
   ["7♠", "suit-black"],
   ["9♥", "suit-red"],
@@ -172,9 +174,9 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
               {POSITION_BY_SEAT[player.id]}
             </span>
             <span className="seat-chips" aria-hidden="true">
-              <i />
-              <i />
-              <i />
+              {Array.from({ length: CHIP_COUNTS[player.id] }).map((_, i) => (
+                <i key={i} />
+              ))}
             </span>
             <span
               className={`hole-cards hole-${player.id}`}

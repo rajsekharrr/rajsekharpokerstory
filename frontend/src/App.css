@@ -64,6 +64,19 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.6'/></svg>");
 }
 
+.page-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 120% 95% at 50% 18%,
+    transparent 52%,
+    rgba(0, 0, 0, 0.42) 88%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
 /* ————— header ————— */
 
 .site-header {
@@ -192,9 +205,22 @@
 
 /* ————— table center: chip stack + tagline ————— */
 
+.table-felt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 7px);
+}
+
 .table-center {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1688,6 +1714,16 @@ button {
 @keyframes badgePop {
   from { opacity: 0; transform: scale(0) rotate(-30deg); }
   to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@media (max-width: 400px) {
+  .seat-3 { left: 9.5%; }
+  .seat-6 { left: 90.5%; }
+
+  .seat-name {
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
