@@ -36,7 +36,11 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 6 — center of the table)
+## Implemented (2026-01, build 7 — layout fix & social bar)
+- Layout fix (user report: Hustler/Fat King avatars clipped by viewport edges): side seats moved from outside the table (102.5% / -2.5%) to 95% / 5% so every avatar sits fully inside the table container; dealer chip positions adjusted (desktop 42% y at 88%/12%; mobile 38% y at 17%/83%) to clear the moved seats' hole cards. Independently verified (troubleshoot agent geometry review): no clipping 390–1920px, ≥25px clearance at the tightest 641px width, no overlaps with board/pot/hole cards, hover states safe.
+- Social links bar at the very bottom: gold gradient hairline above, five Font Awesome icon buttons from cdnjs (fa-globe, fa-linkedin-in, fa-github, fa-x-twitter, fa-file-lines) with labels Portfolio / LinkedIn / GitHub / Twitter / Resume, links to rajsekhar.tech, LinkedIn, GitHub, X and the Drive resume; all `target="_blank"` + `rel="noopener noreferrer"`; icons glow gold and lift on hover; wraps gracefully on mobile.
+- Verified at 1280×800 (user's scenario): all six seat rects inside the viewport, five anchor hrefs/targets correct, hover glow renders, mobile 390px clean.
+
 - Community board: five face-down navy card backs with gold borders in a row above the pot; 3D flip (rotateY, staggered delays) tied to story completion — after seats 1+2 are read the flop flips, after 3+4 the turn, after 5+6 the river reveals the Ace of Spades with a pulsing gold glow and the line "The best hand was always the one he hadn't played yet." fades in below the board. Progression derives from the persisted readIds, strictly in order.
 - Pot: four scattered chip stacks of varying heights (2–5 chips) flanking the main chip stack.
 - Hole cards: two tiny face-down card backs beside each of the six seats (positioned per seat toward the felt; sides flip on mobile), lifting -6px with a smooth hover animation on the player.

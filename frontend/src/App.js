@@ -14,6 +14,39 @@ import FoldToast from "@/components/FoldToast";
 import { PLAYERS } from "@/data/players";
 import "@/App.css";
 
+const SOCIAL_LINKS = [
+  {
+    id: "portfolio",
+    label: "Portfolio",
+    icon: "fas fa-globe",
+    href: "https://rajsekhar.tech",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    icon: "fab fa-linkedin-in",
+    href: "https://www.linkedin.com/in/rajsekhar-roy/",
+  },
+  {
+    id: "github",
+    label: "GitHub",
+    icon: "fab fa-github",
+    href: "https://github.com/rajsekharrr",
+  },
+  {
+    id: "twitter",
+    label: "Twitter",
+    icon: "fab fa-x-twitter",
+    href: "https://x.com/snapcallin",
+  },
+  {
+    id: "resume",
+    label: "Resume",
+    icon: "fas fa-file-lines",
+    href: "https://drive.google.com/file/d/16IZIt_Ywv9HHt666mf1k4FO8jf0uVDDr/view?usp=drive_link",
+  },
+];
+
 export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [chapterOpen, setChapterOpen] = useState(false);
@@ -177,6 +210,27 @@ export default function App() {
         <footer className="site-footer" data-testid="site-footer">
           Built with voice. Submitted to Wispr Flow × Emergent Hiring Challenge 2026.
         </footer>
+
+        <div className="social-bar" data-testid="social-bar">
+          <span className="social-rule" aria-hidden="true" />
+          <div className="social-links">
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.id}
+                className="social-link"
+                data-testid={`social-${link.id}`}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="social-icon">
+                  <i className={link.icon} aria-hidden="true" />
+                </span>
+                <span className="social-label">{link.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
       </main>
 
       {chapterOpen && selected && (
