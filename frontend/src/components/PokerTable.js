@@ -1,6 +1,15 @@
 import { Check } from "lucide-react";
 
-export default function PokerTable({ players, selectedId, readIds, onSelectSeat }) {
+const POSITION_BY_SEAT = {
+  1: "DEALER",
+  2: "SB",
+  3: "BB",
+  4: "UTG",
+  5: "CO",
+  6: "ALL IN",
+};
+
+export default function PokerTable({ players, selectedId, readIds, dealerId, onSelectSeat }) {
   return (
     <section className="table-zone" aria-label="Poker table">
       <div className="table-assembly">
@@ -19,6 +28,14 @@ export default function PokerTable({ players, selectedId, readIds, onSelectSeat 
             </div>
           </div>
         </div>
+        <span
+          className={`dealer-chip d-pos-${dealerId}`}
+          data-testid="dealer-chip"
+          role="status"
+          aria-label="Dealer button"
+        >
+          <b>D</b>
+        </span>
         {players.map((player) => (
           <button
             key={player.id}
@@ -42,6 +59,12 @@ export default function PokerTable({ players, selectedId, readIds, onSelectSeat 
               )}
             </span>
             <span className="seat-name">{player.name}</span>
+            <span
+              className={`seat-pos${dealerId === player.id ? " is-dealer" : ""}`}
+              data-testid={`position-badge-${player.id}`}
+            >
+              {POSITION_BY_SEAT[player.id]}
+            </span>
             <span className="seat-chips" aria-hidden="true">
               <i />
               <i />

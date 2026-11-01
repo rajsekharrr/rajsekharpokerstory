@@ -57,6 +57,15 @@ export default function App() {
 
   const clearToast = useCallback(() => setToast(null), []);
   const actionBarRef = useRef(null);
+  const [dealerId, setDealerId] = useState(1);
+
+  const closeChapter = () => {
+    setChapterOpen(false);
+    window.setTimeout(
+      () => setDealerId((id) => (id % PLAYERS.length) + 1),
+      550,
+    );
+  };
 
   const selected = PLAYERS.find((p) => p.id === selectedId) ?? null;
 
@@ -129,6 +138,7 @@ export default function App() {
           players={PLAYERS}
           selectedId={selectedId}
           readIds={readIds}
+          dealerId={dealerId}
           onSelectSeat={selectSeat}
         />
 
@@ -173,7 +183,7 @@ export default function App() {
         <StoryOverlay
           player={selected}
           onRead={markRead}
-          onClose={() => setChapterOpen(false)}
+          onClose={closeChapter}
         />
       )}
       {toast && (

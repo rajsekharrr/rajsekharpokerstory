@@ -717,6 +717,80 @@ button {
   animation: chipIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
 }
 
+/* ————— dealer button & position badges ————— */
+
+.seat-pos {
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 500;
+  font-size: 0.54rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.75);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  transition: color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+
+.seat-pos.is-dealer {
+  color: #f0d68a;
+  background: rgba(212, 175, 55, 0.18);
+  border-color: rgba(243, 215, 106, 0.65);
+  animation: badgeGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(243, 215, 106, 0.35), 0 0 22px rgba(243, 215, 106, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(243, 215, 106, 0.55), 0 0 34px rgba(243, 215, 106, 0.25);
+  }
+}
+
+.dealer-chip {
+  position: absolute;
+  z-index: 4;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e8e2d0 60%, #cfc7b2 100%);
+  border: 2px dashed rgba(80, 70, 40, 0.5);
+  box-shadow:
+    0 0 14px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(243, 215, 106, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.5);
+  animation: dealerPulse 2.4s ease-in-out infinite;
+  transition: left 0.95s cubic-bezier(0.55, 0.05, 0.35, 1.1), top 0.95s cubic-bezier(0.55, 0.05, 0.35, 1.1);
+}
+
+.dealer-chip b {
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: #2c2618;
+}
+
+@keyframes dealerPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6), 0 0 26px rgba(243, 215, 106, 0.4), 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.85), 0 0 40px rgba(243, 215, 106, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.d-pos-1 { top: 21%; left: 24%; }
+.d-pos-2 { top: 21%; left: 76%; }
+.d-pos-3 { top: 50%; left: 93%; }
+.d-pos-4 { top: 81%; left: 76%; }
+.d-pos-5 { top: 81%; left: 24%; }
+.d-pos-6 { top: 50%; left: 7%; }
+
 /* ————— fold toast ————— */
 
 .fold-toast {
@@ -885,6 +959,27 @@ button {
     width: 15px;
     height: 5px;
   }
+
+  .seat-pos {
+    padding: 2px 7px;
+    font-size: 0.48rem;
+  }
+
+  .dealer-chip {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dealer-chip b {
+    font-size: 0.65rem;
+  }
+
+  .d-pos-1 { top: 15%; left: 23%; }
+  .d-pos-2 { top: 15%; left: 77%; }
+  .d-pos-3 { top: 50%; left: 16%; }
+  .d-pos-4 { top: 86%; left: 77%; }
+  .d-pos-5 { top: 86%; left: 23%; }
+  .d-pos-6 { top: 50%; left: 84%; }
 
   .chip-btn {
     padding: 14px 30px;

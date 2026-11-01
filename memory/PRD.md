@@ -36,7 +36,11 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 4 — reader's music)
+## Implemented (2026-01, build 5 — dealer button system)
+- Glowing white D chip on the felt next to the starting player (the Wanderer), with a soft gold pulse; position badges in muted gold under every name (DEALER, SB, BB, UTG, CO, ALL IN); the current dealer's badge carries the soft gold glow.
+- Closing any BET chapter panel hands the deal clockwise: after the 0.48 s panel fade-out, the D chip glides to the next seat over ~0.95 s (CSS transition on top/left with a slight overshoot curve) and the gold glow transfers to that player's badge. Mobile has its own chip coordinates matched to the compact seat layout.
+- Verified by scripted assertions: chip starts at the Wanderer (24%/21%), badge classes correct on all six seats, after closing a chapter the chip lands exactly at the Dreamer (76%/21%) with the glow transferred; mobile chip at 23%/15%, no overflow. Nothing else on the page was changed.
+
 - Ambient casino loop: synthesized "casino at night" pad (detuned triangle/sine chord A2–E3–B3–C4 through a slowly drifting lowpass, breathing gain LFO, soft room-air noise layer, peak gain ~0.045) that fades in under narration and fades out on pause/end/close; synthesized in Web Audio, no audio files.
 - Mute toggle now silences everything: stops ambience and mutes narration audio instantly (via a soundchange event), and ambience resumes automatically on unmute while narration is playing. Verified as a full state machine: play → on, mute → off, unmute → on, pause → off, replay → on.
 
