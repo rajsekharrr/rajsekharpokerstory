@@ -36,7 +36,10 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 9 — cinematic intro & dealer narrator)
+## Implemented (2026-01, build 10 — dealer-pointing narrator)
+- Dealer bubble now points to the D chip, not the small blind: on first load "Six players. Six chapters. One story. We start from the dealer — the Wanderer wears the D. Click him to begin."; after each chapter it tracks the moved chip ("The deal moves clockwise — the Dreamer wears the D now. Click him for the next chapter."); hover/fold/all-read lines unchanged and still take priority.
+- Confirmed reading order: chapters are read in dealer order (the D chip always marks whose story is next); verified the bubble follows the chip across three positions.
+
 - Cinematic opening: page boots behind a fully black overlay; card-shuffle sound (best-effort — browsers block audio before a first interaction); overhead spotlight fades in over the table's center; four typewriter lines in gold Playfair with blinking cursor and the exact pauses (1.5s/1.5s/1s/2s): "Welcome to the table." / "Every player here has lived a chapter of one man's story." / "Place your bets carefully." / "— Rajsekhar's Table, Est. 2005"; text fades, table fades in over 1s. Skip button top-right (left of the sound toggle).
 - Boot choreography gating: page entrance animations (chip slide → tagline → seats one by one → footer/social) are held (`is-booting` pauses all animations) and play right as the intro fades out, so the reveal is always seen. Skip path uses `is-fastboot`: the table appears fully dealt instantly — no replayed choreography for return visitors.
 - Dealer narrator card (persistent, bottom-left, after intro): dark card with gold bow-tie silhouette avatar and a speech bubble. Default line nudges the small blind: "Six players. Six chapters. One story. Where do you start? The small blind — the Dreamer — is waiting." Contextual via window events: hovering a player → "Curious about [name]? Place your bet."; folding → "[Name] doesn't know that word." (reverts after 4.5s); after all six chapters read → "Now you know who's sitting across from you."

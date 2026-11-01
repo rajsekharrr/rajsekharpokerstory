@@ -113,6 +113,8 @@ export default function App() {
   };
 
   const selected = PLAYERS.find((p) => p.id === selectedId) ?? null;
+  const dealerPlayer =
+    PLAYERS.find((p) => p.id === dealerId) ?? PLAYERS[0];
 
   const selectSeat = (id) => setSelectedId(id);
 
@@ -274,7 +276,9 @@ export default function App() {
       )}
       </div>
 
-      {bootDone && <DealerCard />}
+      {bootDone && (
+        <DealerCard dealerName={dealerPlayer.name} firstDeal={dealerId === 1} />
+      )}
     </>
   );
 }

@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-const DEFAULT_SAY =
-  "Six players. Six chapters. One story. Where do you start? The small blind — the Dreamer — is waiting.";
 const ALL_READ_SAY = "Now you know who’s sitting across from you.";
 
-export default function DealerCard() {
+export default function DealerCard({ dealerName, firstDeal }) {
   const [hoveredName, setHoveredName] = useState(null);
   const [foldName, setFoldName] = useState(null);
   const [allRead, setAllRead] = useState(false);
@@ -31,10 +29,14 @@ export default function DealerCard() {
 
   const cap = (n) => n.charAt(0).toUpperCase() + n.slice(1);
 
-  let say = DEFAULT_SAY;
+  let say;
   if (allRead) say = ALL_READ_SAY;
   else if (foldName) say = `${cap(foldName)} doesn’t know that word.`;
   else if (hoveredName) say = `Curious about ${hoveredName}? Place your bet.`;
+  else if (firstDeal)
+    say = `Six players. Six chapters. One story. We start from the dealer — ${dealerName} wears the D. Click him to begin.`;
+  else
+    say = `The deal moves clockwise — ${dealerName} wears the D now. Click him for the next chapter.`;
 
   return (
     <aside className="dealer-card" data-testid="dealer-card">
