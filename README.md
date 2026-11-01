@@ -3,7 +3,7 @@
 > *Every chapter of my life has been a bet.*  
 > *This is the table.*
 
-**[→ Play the Table Live](https://your-emergent-link-here)**
+**[→ Play the Table Live](https://every-chapter-bet.emergent.host)**
 
 ---
 
@@ -17,7 +17,7 @@ Press **FOLD** and find out why that button doesn't work for me.
 
 Built entirely with voice — every prompt spoken into
 [Wispr Flow](https://wispr.flow) and built on [Emergent](https://emergent.sh)
-as part of the **Wispr Flow × Emergent Hiring Challenge 2024.**
+as part of the **Wispr Flow × Emergent Hiring Challenge 2026.**
 
 ---
 
