@@ -36,7 +36,12 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 8 — showdown moment)
+## Implemented (2026-01, build 9 — cinematic intro & dealer narrator)
+- Cinematic opening: page boots behind a fully black overlay; card-shuffle sound (best-effort — browsers block audio before a first interaction); overhead spotlight fades in over the table's center; four typewriter lines in gold Playfair with blinking cursor and the exact pauses (1.5s/1.5s/1s/2s): "Welcome to the table." / "Every player here has lived a chapter of one man's story." / "Place your bets carefully." / "— Rajsekhar's Table, Est. 2001"; text fades, table fades in over 1s. Skip button top-right (left of the sound toggle).
+- Boot choreography gating: page entrance animations (chip slide → tagline → seats one by one → footer/social) are held (`is-booting` pauses all animations) and play right as the intro fades out, so the reveal is always seen. Skip path uses `is-fastboot`: the table appears fully dealt instantly — no replayed choreography for return visitors.
+- Dealer narrator card (persistent, bottom-left, after intro): dark card with gold bow-tie silhouette avatar and a speech bubble. Default line nudges the small blind: "Six players. Six chapters. One story. Where do you start? The small blind — the Dreamer — is waiting." Contextual via window events: hovering a player → "Curious about [name]? Place your bet."; folding → "[Name] doesn't know that word." (reverts after 4.5s); after all six chapters read → "Now you know who's sitting across from you."
+- Verified: intro staging screenshot (spotlight + typing + skip), skip path shows the full table instantly, natural path replays the entrance choreography, all four dealer lines asserted word-for-word, fold message settles back to default, mobile intro/skip/card all clean.
+
 - Chip-push sound: synthesized slide (bandpass noise sweep 300→900 Hz) followed by three landing clinks, played once the Ace of Spades finishes flipping (fires ~1.2 s after the fifth chapter completes; respects the mute toggle and replays on reloads where the full board is already revealed).
 - Gold shimmer: a diagonal light sweep crosses the whole pot area twice (potShimmer keyframes over the scattered stacks and main stack), then a soft gold bloom settles permanently on the pot chips — the pot is won.
 - Verified: scripted journey — showdown class absent before reading, `is-showdown` + potShimmer animation applied after chapter six, gold bloom present in computed styles, screenshot captured the glowing Ace + warm pot.

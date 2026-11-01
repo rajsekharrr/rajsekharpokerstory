@@ -129,6 +129,26 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
             className={`seat seat-${player.id}${selectedId === player.id ? " is-selected" : ""}`}
             data-testid={`seat-${player.id}`}
             aria-pressed={selectedId === player.id}
+            onMouseEnter={() =>
+              window.dispatchEvent(
+                new CustomEvent("dealer-hover", { detail: player.name }),
+              )
+            }
+            onMouseLeave={() =>
+              window.dispatchEvent(
+                new CustomEvent("dealer-hover", { detail: null }),
+              )
+            }
+            onFocus={() =>
+              window.dispatchEvent(
+                new CustomEvent("dealer-hover", { detail: player.name }),
+              )
+            }
+            onBlur={() =>
+              window.dispatchEvent(
+                new CustomEvent("dealer-hover", { detail: null }),
+              )
+            }
             onClick={() => onSelectSeat(player.id)}
           >
             <span className="seat-avatar">

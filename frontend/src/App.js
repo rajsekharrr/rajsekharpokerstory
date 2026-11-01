@@ -11,6 +11,8 @@ import {
 import PokerTable from "@/components/PokerTable";
 import StoryOverlay from "@/components/StoryOverlay";
 import FoldToast from "@/components/FoldToast";
+import IntroSequence from "@/components/IntroSequence";
+import DealerCard from "@/components/DealerCard";
 import { PLAYERS } from "@/data/players";
 import "@/App.css";
 
@@ -91,6 +93,16 @@ export default function App() {
   const clearToast = useCallback(() => setToast(null), []);
   const actionBarRef = useRef(null);
   const [dealerId, setDealerId] = useState(1);
+  const [introMounted, setIntroMounted] = useState(true);
+  const [bootDone, setBootDone] = useState(false);
+  const [fastBoot, setFastBoot] = useState(false);
+
+  const handleIntroFadeStart = (skipped) => {
+    setFastBoot(skipped);
+    setBootDone(true);
+  };
+
+  const handleIntroGone = () => setIntroMounted(false);
 
   const closeChapter = () => {
     setChapterOpen(false);
@@ -122,6 +134,9 @@ export default function App() {
       } catch {
         /* storage unavailable — badge just won't persist */
       }
+      if (next.size === PLAYERS.length) {
+        window.dispatchEvent(new CustomEvent("dealer-allread"));
+      }
       return next;
     });
   }, []);
@@ -137,10 +152,24 @@ export default function App() {
     if (!selected) return;
     playFoldClink();
     setToast({ id: Date.now(), player: selected });
+    window.dispatchEvent(
+      new CustomEvent("dealer-fold", { detail: selected.name }),
+    );
   };
 
   return (
-    <div className="felt-page">
+    <>
+      {introMounted && (
+        <IntroSequence
+          onFadeStart={handleIntroFadeStart}
+          onGone={handleIntroGone}
+        />
+      )}
+      <div
+        className={`felt-page${
+          bootDone ? (fastBoot ? " is-fastboot" : "") : " is-booting"
+        }`}
+      >
       <span className="ambient ambient-blue-top" aria-hidden="true" />
       <span className="ambient ambient-blue-bottom" aria-hidden="true" />
       <span className="ambient ambient-gold" aria-hidden="true" />
@@ -243,6 +272,9 @@ export default function App() {
       {toast && (
         <FoldToast key={toast.id} player={toast.player} onDone={clearToast} />
       )}
-    </div>
+      </div>
+
+      {bootDone && <DealerCard />}
+    </>
   );
 }

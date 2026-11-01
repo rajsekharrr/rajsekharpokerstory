@@ -1090,6 +1090,227 @@ button {
   color: #f0d68a;
 }
 
+/* ————— cinematic intro ————— */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: #050608;
+  transition: opacity 1s ease;
+}
+
+.intro.is-fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 44%,
+    rgba(243, 222, 150, 0.16) 0%,
+    rgba(212, 175, 55, 0.07) 24%,
+    rgba(5, 6, 8, 0.99) 64%,
+    #050608 100%
+  );
+  opacity: 0;
+  animation: introSpotlight 1.6s ease 0.2s both;
+}
+
+@keyframes introSpotlight {
+  to { opacity: 1; }
+}
+
+.intro-lines {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 300px;
+  max-width: 760px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.intro-line {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  color: #ecd9a0;
+  text-shadow: 0 2px 18px rgba(212, 175, 55, 0.25);
+  min-height: 1.2em;
+}
+
+.intro-line.line-1 {
+  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.intro-line.line-2 {
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+}
+
+.intro-line.line-3 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+.intro-line.line-4 {
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(236, 217, 160, 0.75);
+}
+
+.intro-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: #d4af37;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+.intro-skip {
+  position: fixed;
+  top: 22px;
+  right: 74px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(20, 16, 8, 0.5);
+  color: rgba(233, 207, 138, 0.8);
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.intro-skip:hover {
+  background: rgba(212, 175, 55, 0.16);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+  color: #f6e27a;
+}
+
+/* ————— booting: hold entrance choreography until the intro clears ————— */
+
+.felt-page.is-booting * {
+  animation-play-state: paused !important;
+}
+
+/* skip path: the table appears fully dealt, no replayed entrance */
+
+.felt-page.is-fastboot .site-header,
+.felt-page.is-fastboot .table-rail,
+.felt-page.is-fastboot .seat,
+.felt-page.is-fastboot .tagline,
+.felt-page.is-fastboot .action-hint,
+.felt-page.is-fastboot .site-footer,
+.felt-page.is-fastboot .social-bar,
+.felt-page.is-fastboot .hero-chip {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* ————— dealer narrator card ————— */
+
+.dealer-card {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: min(78vw, 330px);
+  animation: fadeUp 0.7s ease 0.4s both;
+}
+
+.dealer-face {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: radial-gradient(circle at 35% 30%, #232a36, #0d1119);
+  color: #e9cf8a;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.25);
+}
+
+.dealer-bubble {
+  position: relative;
+  margin-top: 2px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(13, 16, 22, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #efe6d0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  animation: bubbleIn 0.35s ease both;
+}
+
+.dealer-bubble::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 14px;
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  background: rgba(13, 16, 22, 0.92);
+  border-left: 1px solid rgba(212, 175, 55, 0.4);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .intro-skip {
+    top: 14px;
+    right: 64px;
+  }
+
+  .intro-lines {
+    min-height: 240px;
+    gap: 18px;
+  }
+
+  .dealer-card {
+    bottom: 14px;
+    left: 14px;
+    max-width: 76vw;
+  }
+
+  .dealer-bubble {
+    font-size: 0.92rem;
+  }
+}
+
 /* ————— fold toast ————— */
 
 .fold-toast {
