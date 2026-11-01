@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 
 const POSITION_BY_SEAT = {
@@ -9,7 +10,63 @@ const POSITION_BY_SEAT = {
   6: "ALL IN",
 };
 
+const COMMUNITY_FACES = [
+  ["7♠", "suit-black"],
+  ["9♥", "suit-red"],
+  ["Q♦", "suit-red"],
+  ["3♣", "suit-black"],
+  ["A♠", "suit-black"],
+];
+
+function CommunityCards({ flopUp, turnUp, riverUp }) {
+  const [armed, setArmed] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setArmed(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+
+  const up = [
+    armed && flopUp,
+    armed && flopUp,
+    armed && flopUp,
+    armed && turnUp,
+    armed && riverUp,
+  ];
+
+  return (
+    <div className="community-block">
+      <div className="community-row" data-testid="community-row">
+        {COMMUNITY_FACES.map(([face, suit], i) => (
+          <span
+            key={face}
+            className={`community-card${up[i] ? " is-up" : ""}${i === 4 && up[i] ? " ace" : ""}`}
+            data-testid={`community-card-${i + 1}`}
+            style={{ "--d": `${(i % 3) * 0.22}s` }}
+          >
+            <span className="cc-inner">
+              <span className="cc-face cc-front">
+                <b className={suit}>{face}</b>
+              </span>
+              <span className="cc-back" aria-hidden="true" />
+            </span>
+          </span>
+        ))}
+      </div>
+      {armed && riverUp && (
+        <p className="river-line" data-testid="river-line">
+          The best hand was always the one he hadn’t played yet.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function PokerTable({ players, selectedId, readIds, dealerId, onSelectSeat }) {
+  const flopUp = readIds.has(1) && readIds.has(2);
+  const turnUp = flopUp && readIds.has(3) && readIds.has(4);
+  const riverUp = turnUp && readIds.has(5) && readIds.has(6);
+
   return (
     <section className="table-zone" aria-label="Poker table">
       <div className="table-assembly">
@@ -18,11 +75,22 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
             <span className="felt-texture" aria-hidden="true" />
             <span className="felt-line" aria-hidden="true" />
             <div className="table-center">
-              <div className="hero-chips" aria-hidden="true">
-                <span className="hero-chip chip-teal" />
-                <span className="hero-chip chip-red" />
-                <span className="hero-chip chip-blue" />
-                <span className="hero-chip chip-gold" />
+              <CommunityCards
+                flopUp={flopUp}
+                turnUp={turnUp}
+                riverUp={riverUp}
+              />
+              <div className="pot-area" aria-hidden="true">
+                <div className="hero-chips">
+                  <span className="hero-chip chip-teal" />
+                  <span className="hero-chip chip-red" />
+                  <span className="hero-chip chip-blue" />
+                  <span className="hero-chip chip-gold" />
+                </div>
+                <span className="pot-stack ps-1"><i /><i /><i /></span>
+                <span className="pot-stack ps-2"><i /><i /><i /><i /><i /></span>
+                <span className="pot-stack ps-3"><i /><i /></span>
+                <span className="pot-stack ps-4"><i /><i /><i /><i /></span>
               </div>
               <p className="tagline">Every Chapter Was a Bet</p>
             </div>
@@ -69,6 +137,14 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
               <i />
               <i />
               <i />
+            </span>
+            <span
+              className={`hole-cards hole-${player.id}`}
+              data-testid={`hole-cards-${player.id}`}
+              aria-hidden="true"
+            >
+              <span />
+              <span />
             </span>
           </button>
         ))}

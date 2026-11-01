@@ -36,7 +36,13 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 5 — dealer button system)
+## Implemented (2026-01, build 6 — center of the table)
+- Community board: five face-down navy card backs with gold borders in a row above the pot; 3D flip (rotateY, staggered delays) tied to story completion — after seats 1+2 are read the flop flips, after 3+4 the turn, after 5+6 the river reveals the Ace of Spades with a pulsing gold glow and the line "The best hand was always the one he hadn't played yet." fades in below the board. Progression derives from the persisted readIds, strictly in order.
+- Pot: four scattered chip stacks of varying heights (2–5 chips) flanking the main chip stack.
+- Hole cards: two tiny face-down card backs beside each of the six seats (positioned per seat toward the felt; sides flip on mobile), lifting -6px with a smooth hover animation on the player.
+- Fix found during verification: `.community-card`/`.cc-inner` are spans and needed `display: block` or the board collapsed to zero height.
+- Verified: scripted journey through all six chapters — flip thresholds land exactly (F F F F F → flop → turn → full board), river text exact, card boxes 52×73, mobile board 182px wide with no overflow; screenshots of face-down and river states on desktop and mobile.
+
 - Glowing white D chip on the felt next to the starting player (the Wanderer), with a soft gold pulse; position badges in muted gold under every name (DEALER, SB, BB, UTG, CO, ALL IN); the current dealer's badge carries the soft gold glow.
 - Closing any BET chapter panel hands the deal clockwise: after the 0.48 s panel fade-out, the D chip glides to the next seat over ~0.95 s (CSS transition on top/left with a slight overshoot curve) and the gold glow transfers to that player's badge. Mobile has its own chip coordinates matched to the compact seat layout.
 - Verified by scripted assertions: chip starts at the Wanderer (24%/21%), badge classes correct on all six seats, after closing a chapter the chip lands exactly at the Dreamer (76%/21%) with the glow transferred; mobile chip at 23%/15%, no overflow. Nothing else on the page was changed.
