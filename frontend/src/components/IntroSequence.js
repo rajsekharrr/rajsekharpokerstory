@@ -9,7 +9,7 @@ const LINES = [
     pause: 1500,
   },
   { text: "Place your bets carefully.", style: "line-3", pause: 1000 },
-  { text: "— Rajsekhar’s Table, Est. 2001", style: "line-4", pause: 2000 },
+  { text: "— Rajsekhar’s Table, Est. 2005", style: "line-4", pause: 2000 },
 ];
 
 export default function IntroSequence({ onFadeStart, onGone }) {
