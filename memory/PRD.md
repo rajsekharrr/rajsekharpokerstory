@@ -36,7 +36,11 @@ Build a single-page interactive web app that looks and feels like a real online 
 - P1: Chapter progress tracker (gold chip badge on seats whose chapter has been read).
 - P2: Share-a-chapter card.
 
-## Implemented (2026-01, build 7 — layout fix & social bar)
+## Implemented (2026-01, build 8 — showdown moment)
+- Chip-push sound: synthesized slide (bandpass noise sweep 300→900 Hz) followed by three landing clinks, played once the Ace of Spades finishes flipping (fires ~1.2 s after the fifth chapter completes; respects the mute toggle and replays on reloads where the full board is already revealed).
+- Gold shimmer: a diagonal light sweep crosses the whole pot area twice (potShimmer keyframes over the scattered stacks and main stack), then a soft gold bloom settles permanently on the pot chips — the pot is won.
+- Verified: scripted journey — showdown class absent before reading, `is-showdown` + potShimmer animation applied after chapter six, gold bloom present in computed styles, screenshot captured the glowing Ace + warm pot.
+
 - Layout fix (user report: Hustler/Fat King avatars clipped by viewport edges): side seats moved from outside the table (102.5% / -2.5%) to 95% / 5% so every avatar sits fully inside the table container; dealer chip positions adjusted (desktop 42% y at 88%/12%; mobile 38% y at 17%/83%) to clear the moved seats' hole cards. Independently verified (troubleshoot agent geometry review): no clipping 390–1920px, ≥25px clearance at the tightest 641px width, no overlaps with board/pot/hole cards, hover states safe.
 - Social links bar at the very bottom: gold gradient hairline above, five Font Awesome icon buttons from cdnjs (fa-globe, fa-linkedin-in, fa-github, fa-x-twitter, fa-file-lines) with labels Portfolio / LinkedIn / GitHub / Twitter / Resume, links to rajsekhar.tech, LinkedIn, GitHub, X and the Drive resume; all `target="_blank"` + `rel="noopener noreferrer"`; icons glow gold and lift on hover; wraps gracefully on mobile.
 - Verified at 1280×800 (user's scenario): all six seat rects inside the viewport, five anchor hrefs/targets correct, hover glow renders, mobile 390px clean.

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import { playChipPush } from "@/utils/sounds";
 
 const POSITION_BY_SEAT = {
   1: "DEALER",
@@ -67,6 +68,18 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
   const turnUp = flopUp && readIds.has(3) && readIds.has(4);
   const riverUp = turnUp && readIds.has(5) && readIds.has(6);
 
+  const [showdown, setShowdown] = useState(false);
+
+  useEffect(() => {
+    if (!riverUp || showdown) return undefined;
+    const t = setTimeout(() => setShowdown(true), 1200);
+    return () => clearTimeout(t);
+  }, [riverUp, showdown]);
+
+  useEffect(() => {
+    if (showdown) playChipPush();
+  }, [showdown]);
+
   return (
     <section className="table-zone" aria-label="Poker table">
       <div className="table-assembly">
@@ -80,7 +93,12 @@ export default function PokerTable({ players, selectedId, readIds, dealerId, onS
                 turnUp={turnUp}
                 riverUp={riverUp}
               />
-              <div className="pot-area" aria-hidden="true">
+              <div
+                className={`pot-area${showdown ? " is-showdown" : ""}`}
+                data-testid="pot-area"
+                aria-hidden="true"
+              >
+                <span className="pot-shimmer" />
                 <div className="hero-chips">
                   <span className="hero-chip chip-teal" />
                   <span className="hero-chip chip-red" />

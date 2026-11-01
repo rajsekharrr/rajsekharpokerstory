@@ -121,6 +121,34 @@ export const playLoadShuffle = async () => {
   return true;
 };
 
+export const playChipPush = () => {
+  if (!soundEnabled()) return;
+  const ctx = getCtx();
+  const t = ctx.currentTime;
+  const dur = 0.5;
+  const buffer = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i++) {
+    data[i] = Math.random() * 2 - 1;
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = buffer;
+  const band = ctx.createBiquadFilter();
+  band.type = "bandpass";
+  band.Q.value = 0.8;
+  band.frequency.setValueAtTime(300, t);
+  band.frequency.exponentialRampToValueAtTime(900, t + 0.4);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.11, t + 0.08);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  src.connect(band).connect(g).connect(ctx.destination);
+  src.start(t);
+  clink(0.4, 1900, 0.14);
+  clink(0.47, 2300, 0.12);
+  clink(0.55, 2100, 0.1);
+};
+
 let ambienceNodes = null;
 
 export const startAmbience = () => {
